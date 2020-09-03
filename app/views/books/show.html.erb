@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <%= render 'books/error', book: @book %>
+    <div class="col-xs-3">
+      <%= render 'users/user', user: @user %>
+      <%= render 'books/book', book: @newbook %>
+    </div>
+    <div class="col-xs-9">
+      <h1>Book detail</h1>
+      <table class="table table-user-show">
+        <tr>
+          <td><%= attachment_image_tag @user, :profile_image, :fill, 30, 30, fallback: "no_image.jpg"%></td>
+          <td><%= link_to @user.name, user_path(@user) %></td>
+          <td><%= @book.title %></td>
+          <td><%= @book.body %></td>
+          <% if @book.user_id == current_user.id %>
+            <td><%= link_to "Edit", edit_book_path(@book), class:"btn btn-success"%></td>
+            <td><%= link_to "Destroy", book_path(@book), method: :delete, data: {confirm: "本当に消しますか？"}, class:"btn btn-danger" %></td>
+          <% end %>
+          <td>コメント数：<%= @book.book_comments.count %></td>
+        </tr>
+      </table>
+      <% @book.book_comments.each do |book_comment| %>
+          <div class="profile-image">
+            <%= attachment_image_tag(@book.user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %><br>
+            <%= book_comment.user.name %></a>
+          </div>
+        <% end %>
+      <%= form_for [@book, @book_comment] do |f| %>
+        <%= f.text_area :comment, rows:'5', class: "form-control" %>
+        <%= f.submit "送信" %>
+      <% end %>
+    </div>
+  </div>
+</div>
