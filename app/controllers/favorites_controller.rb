@@ -12,6 +12,7 @@ class FavoritesController < ApplicationController
   	favorite = current_user.favorites.find_by(book_id: @book.id)
   	favorite.destroy
   	redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: root_path)
   end
 
 end
